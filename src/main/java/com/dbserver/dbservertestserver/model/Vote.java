@@ -8,11 +8,11 @@ package com.dbserver.dbservertestserver.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,18 +21,20 @@ import javax.persistence.TemporalType;
  * @author Tiago
  */
 @Entity
-public class User implements Serializable {
-
+public class Vote implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false, length = 30)
-    private String name;
-
+    
+    @ManyToOne
+    private Restaurant restaurant;
+    
+    @ManyToOne
+    private User user;
+    
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date create_date = new Date(System.currentTimeMillis());
+    private Date vote_date = new Date(System.currentTimeMillis());
 
     public Integer getId() {
         return id;
@@ -42,19 +44,27 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
-    public Date getCreate_date() {
-        return create_date;
+    public User getUser() {
+        return user;
     }
 
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getVote_date() {
+        return vote_date;
+    }
+
+    public void setVote_date(Date vote_date) {
+        this.vote_date = vote_date;
     }
 }

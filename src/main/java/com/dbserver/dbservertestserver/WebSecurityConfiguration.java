@@ -8,7 +8,6 @@ package com.dbserver.dbservertestserver;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Component;
@@ -21,12 +20,14 @@ import org.springframework.stereotype.Component;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/restaurants").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/restaurants").permitAll()
                 .and().csrf().disable();
     }
 }
