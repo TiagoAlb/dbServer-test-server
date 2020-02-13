@@ -84,6 +84,7 @@ O sistema foi realizado buscando otimizar o tempo de desenvolvimento para entreg
 - Paginação da listagem de restaurantes
 - Aumento do raio de busca dos restaurantes
 - Inclusão de barra de pesquisa de restaurantes
+- Inclusão de estrelas para a votação da qualidade de cada restaurante
 - Autenticação de usuário (para que ninguém vote na vez do outro) e inclusão de CPF para previnir usuários duplicados
 - Roteamento das páginas na parte do cliente
 - Inclusão de componentes para mensagens personalizadas na parte do cliente
