@@ -26,6 +26,6 @@ public interface VotingDAO extends PagingAndSortingRepository<Voting, Integer> {
     @Query("SELECT voting FROM Voting voting WHERE voting.start_date = CURRENT_DATE AND voting.closeVoting = false")
     public List<Voting> findByStartDateAndCloseVoting();
 
-    @Query(value = "SELECT voting.id FROM vote_restaurant_count JOIN voting ON voting.id = vote_restaurant_count.voting_id WHERE WEEKDAY(voting.start_date) = WEEKDAY(current_date()) AND restaurant_id = :id", nativeQuery = true)
+    @Query(value = "SELECT voting.id FROM vote_restaurant_count JOIN voting ON voting.id = vote_restaurant_count.voting_id WHERE WEEKDAY(voting.start_date) = WEEKDAY(current_date()) AND voting.winner_id = restaurant_id AND restaurant_id = :id", nativeQuery = true)
     public Integer findVoteRestaurantWeek(@Param("id") Integer id);
 }
