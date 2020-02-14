@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api")
 public class Users {
+
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -64,28 +65,29 @@ public class Users {
     public Vote vote(@PathVariable int userID, @PathVariable String restaurantID) throws JSONException, NotFoundException, Exception {
         List<Voting> votinsToday = votingDAO.findByStartDateAndCloseVoting();
         Voting today_voting = null;
-        
-        if(votinsToday.size() > 0)
-           today_voting = votingDAO.findByStartDateAndCloseVoting().get(0);
-        
+
+        if (votinsToday.size() > 0) {
+            today_voting = votingDAO.findByStartDateAndCloseVoting().get(0);
+        }
+
         Optional<User> user = userDAO.findById(userID);
 
         Restaurants restaurantsController = new Restaurants();
         Restaurant restaurantGoogle = restaurantsController.getDetailsRestaurant(restaurantID);
         Vote vote = new Vote();
-        
+
         if (user.isPresent()) {
             if (restaurantGoogle.getPlace_id() != null && !restaurantGoogle.getPlace_id().equals("")) {
-                if(!userDAO.findUserVote(userID).isPresent()) {               
+                if (!userDAO.findUserVote(userID).isPresent()) {
                     vote.setUser(user.get());
 
                     Optional<Restaurant> restaurant = restaurantDAO.findByPlaceId(restaurantID);
 
                     if (restaurant.isPresent()) {
-                        Integer votingId = votingDAO.findVoteRestaurantWeek(restaurant.get().getId());
-                        if(votingId > 0)
+                        Optional<Integer> votingId = votingDAO.findVoteRestaurantWeek(restaurant.get().getId());
+                        if (votingId.isPresent() && votingId.get() > 0) {
                             throw new Exception("Este restaurante já ganhou a votação nesta semana!");
-                        else {
+                        } else {
                             restaurantGoogle.setId(restaurant.get().getId());
                             vote.setRestaurant(restaurantDAO.save(restaurantGoogle));
                         }
@@ -95,7 +97,7 @@ public class Users {
                     }
 
                     if (today_voting != null) {
-                        today_voting.getVotes().add(voteDAO.save(vote));             
+                        today_voting.getVotes().add(voteDAO.save(vote));
                     } else {
                         List<Vote> votes = new ArrayList<>();
                         today_voting = new Voting();
@@ -104,26 +106,32 @@ public class Users {
                         votes.add(voteDAO.save(vote));
                         today_voting.setVotes(votes);
                     }
-                } else throw new NotFoundException("O usuário já realizou seu voto!");
-            } else throw new NotFoundException("Restaurante não encontrado!");
-        } else throw new NotFoundException("Usuário não encontrado!");
+                } else {
+                    throw new NotFoundException("O usuário já realizou seu voto!");
+                }
+            } else {
+                throw new NotFoundException("Restaurante não encontrado!");
+            }
+        } else {
+            throw new NotFoundException("Usuário não encontrado!");
+        }
 
         Voting votingSaved = votingDAO.save(today_voting);
-        
+
         Optional<VoteRestaurantCount> votesCount = voteRestaurantCountDAO.findByVotingAndRestaurantId(votingSaved.getId(), vote.getRestaurant().getId());
         VoteRestaurantCount votesCountSaved = new VoteRestaurantCount();
-        
-        if(votesCount.isPresent()) {
+
+        if (votesCount.isPresent()) {
             votesCountSaved = votesCount.get();
-            votesCountSaved.setCountVotes(votesCountSaved.getCountVotes()+1);
+            votesCountSaved.setCountVotes(votesCountSaved.getCountVotes() + 1);
         } else {
             votesCountSaved.setCountVotes(1);
             votesCountSaved.setRestaurant(vote.getRestaurant());
             votesCountSaved.setVoting(votingSaved);
         }
-        
+
         voteRestaurantCountDAO.save(votesCountSaved);
-        
+
         return vote;
     }
 

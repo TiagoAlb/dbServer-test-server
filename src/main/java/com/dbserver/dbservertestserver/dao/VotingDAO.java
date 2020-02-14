@@ -8,6 +8,7 @@ package com.dbserver.dbservertestserver.dao;
 import com.dbserver.dbservertestserver.model.Voting;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -26,6 +27,10 @@ public interface VotingDAO extends PagingAndSortingRepository<Voting, Integer> {
     @Query("SELECT voting FROM Voting voting WHERE voting.start_date = CURRENT_DATE AND voting.closeVoting = false")
     public List<Voting> findByStartDateAndCloseVoting();
 
-    @Query(value = "SELECT voting.id FROM vote_restaurant_count JOIN voting ON voting.id = vote_restaurant_count.voting_id WHERE WEEKDAY(voting.start_date) = WEEKDAY(current_date()) AND voting.winner_id = restaurant_id AND restaurant_id = :id", nativeQuery = true)
-    public Integer findVoteRestaurantWeek(@Param("id") Integer id);
+    @Query(value = "SELECT voting.id FROM voting JOIN restaurant ON voting.winner_id = restaurant.id "
+            + "WHERE WEEKOFYEAR(voting.start_date) = WEEKOFYEAR(current_date()) "
+            + "AND MONTH(voting.start_date) = MONTH(current_date()) "
+            + "AND YEAR(voting.start_date) = YEAR(current_date()) "
+            + "AND restaurant.id = :id", nativeQuery = true)
+    public Optional<Integer> findVoteRestaurantWeek(@Param("id") Integer id);
 }
