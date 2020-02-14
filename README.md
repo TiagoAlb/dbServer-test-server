@@ -73,7 +73,7 @@ https://www.postman.com/collections/dd1b179ed4781c972972
 
 - O término da votação será reaizado as 11h e 30min de todos os dias, para que todos possam se despir de preconceitos e preparar seu psicologico antes do almoço.
 - Ao acessar o sistema, caso a votação não esteja encerrada, será mostrado um timer com o tempo restante e lista(caso haja) de usuários que se cadastraram mas não votaram ainda. É possível também incluir um novo.
-- Ao clicar em um usuário ou incluir um novo, o sistema irá direcionar para a tela de restaurantes, onde será mostado todos os restaurantes em um raio de 2km do local de trabalho da equipe (para que todos possam voltar a tempo) e um botão de coração para realizar a votação.
+- Ao clicar em um usuário ou incluir um novo, o sistema irá direcionar para a tela de restaurantes, onde será mostado todos os restaurantes em um raio de 2km (para que todos possam voltar a tempo) do local de trabalho da equipe e um botão de coração para realizar a votação.
 - Ao realizar a votação, o usuário será automaticamente direcionado para a tela de inicio e será informado os restaurantes já votados e quantos votos cada.
 - Caso o usuário desista de votar, é possível retornar a tela anterior através do botão na barra ao topo da página.
 - Ao término da votação, o timer é finalizado e o ganhador é informado.
