@@ -1,6 +1,6 @@
 ## Servidor de aplicação
 
-Foi configurado o projeto em um servidor externo, para facilitar o projeto da equipe. 
+Foi configurado o projeto em um servidor externo, para facilitar os testes da equipe. 
 
 Link do projeto: http://ec2-18-229-155-222.sa-east-1.compute.amazonaws.com:3000/
 
