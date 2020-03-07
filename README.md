@@ -25,6 +25,7 @@ Para o lado do servidor, foi utilizado o framework Spring Boot na versão 2.2.4 
 ### Banco de dados
 
 Usuário: root
+
 Senha: root
 
 ## Endpoints
