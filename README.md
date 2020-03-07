@@ -31,7 +31,7 @@ Senha: root
 
 Foram criados endpoints de cominicação do lado do servidor para comunicação entre cliente e server, dentre eles estão:
 ### GET:
-Listar usuários disponíveis para votação: /api/
+Listar usuários disponíveis para votação: /api/users
 
 Listar restaurantes: /api/restaurants
 
